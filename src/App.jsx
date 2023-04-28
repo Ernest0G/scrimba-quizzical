@@ -8,6 +8,7 @@ function App() {
   const [showStartGame, setShowStartGame] = useState(true);
   const [inputValue, setInputValue] = useState(0);
   const [questions, setQuestions] = useState([]);
+  const [questionCards, setQuestionCards] = useState([]);
 
   const url = `https://opentdb.com/api.php?amount=${amountOfQuestions}&type=multiple`
 
@@ -15,6 +16,17 @@ function App() {
   useEffect(() => {
     setAmountOfQuestions(inputValue);
   }, [inputValue])
+
+  useEffect(() => {
+    setQuestionCards(questions.map(question => (
+      <QuestionCard
+        key={question.question}
+        question={question.question}
+        correctAnswer={question.correct_answer}
+        options={[...question.incorrect_answers, question.correct_answer]}
+      />
+    )))
+  }, [showStartGame, questions])
 
 
   function handleStartGame() {
@@ -24,11 +36,11 @@ function App() {
         .then(data => {
           setQuestions(data.results);
         });
-
       setShowStartGame(false);
     }
   }
-  function handleChoiceSelection() {
+
+  function handleOptionSelection() {
 
   }
 
@@ -40,42 +52,14 @@ function App() {
   return (
     <div className='App'>
       {showStartGame && <StartGame inputChange={handleInputChange} inputValue={inputValue} onStartGame={handleStartGame} />}
-      {/* <QuestionCard
-            question={question.results.question}
-            correctAnswer={question.results.correct_answer}
-            options={question.results.incorrect_answers.concat(question.results.correct_answer)}
-          /> */}
 
-      {!showStartGame && <>
-        <div className='questions-container'>
-          <QuestionCard
-            question={'Which best selling toy of 1983 caused hysteria, resulting in riots breaking in stores?'}
-            correctAnswer={'This'}
-            options={['That', 'Those', 'This', 'Their']}
-          />
-          <QuestionCard
-            question={'Which best selling toy of 1983 caused hysteria, resulting in riots breaking in stores?'}
-            correctAnswer={'This'}
-            options={['That', 'Those', 'This', 'Their']}
-          />
-          <QuestionCard
-            question={'Which best selling toy of 1983 caused hysteria, resulting in riots breaking in stores?'}
-            correctAnswer={'This'}
-            options={['That', 'Those', 'This', 'Their']}
-          />
-          <QuestionCard
-            question={'Which best selling toy of 1983 caused hysteria, resulting in riots breaking in stores?'}
-            correctAnswer={'This'}
-            options={['That', 'Those', 'This', 'Their']}
-          />
-          <QuestionCard
-            question={'Which best selling toy of 1983 caused hysteria, resulting in riots breaking in stores?'}
-            correctAnswer={'This'}
-            options={['That', 'Those', 'This', 'Their']}
-          />
-        </div>
-        <button className='button'>Check Answers</button>
-      </>
+      {!showStartGame &&
+        <>
+          <div className='questions-container'>
+            {questionCards}
+          </div>
+          <button className='button'>Check Answers</button>
+        </>
       }
 
     </div>

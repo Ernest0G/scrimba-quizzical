@@ -81,6 +81,7 @@ body {
 
 .question {
   width: 50%;
+
 }
 
 .questions {
@@ -101,7 +102,7 @@ body {
   cursor: pointer;
 }
 
-.option-button:focus {
+.selected-option {
   background-color: #adc3d8;
   border: none;
 }
@@ -111,4 +112,5 @@ body {
 hr {
   width: 100%;
   border-top: 2px solid #cfd1d4;
+  margin-top: 25px;
 }
