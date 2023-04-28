@@ -16,7 +16,7 @@ const StartGame = (props) => {
                 value={props.inputValue}
             />
             <button
-                className='startgame-button'
+                className='button'
                 onClick={props.onStartGame}>
                 Start Game
             </button>
