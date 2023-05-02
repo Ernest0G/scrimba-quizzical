@@ -12,7 +12,7 @@ const QuestionCard = (props) => {
     return (
         <div className='question-card'>
             <h2 className='question'>{he.decode(props.question)}</h2>
-            {/* <h4>{props.correctAnswer}</h4> */}
+
             <div className="questions">
                 <button
                     onClick={() => optionSelect(0)}
@@ -34,7 +34,7 @@ const QuestionCard = (props) => {
                     className={`option-button ${selectedOption === 3 && 'selected-option'}`}>
                     {he.decode(props.options[3])}
                 </button>
-
+                <h4>{props.correctAnswer}</h4>
             </div>
             <hr />
         </div>
