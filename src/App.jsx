@@ -12,6 +12,7 @@ function App() {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false)
 
+  //Added feature to input how many questions the user wants for the quiz
   const url = `https://opentdb.com/api.php?amount=${amountOfQuestions}&type=multiple`
 
   useEffect(() => {
@@ -22,12 +23,15 @@ function App() {
         question={question.question}
         correctAnswer={question.correctAnswer}
         options={question.options}
-        selectedOptionIndex={question.selectedOption}
+        selectedOptionIndex={question.selectedOptionIndex}
         handleOptionSelection={handleOptionSelection}
+        isSelectionCorrect={question.isSelectionCorrect}
+        isGameOver={isGameOver}
       />
     )))
-  }, [showStartGame, questions])
+  }, [showStartGame, questions,isGameOver])
 
+  //Array needs to be shuffled or the correct answer will be in the same spot everytime
   function shuffleArray(arr) {
     return arr.sort(() => Math.random() - 0.5);
   }
@@ -75,22 +79,24 @@ function App() {
             { ...question, isSelectionCorrect: false }
         })
       })
-      questions.forEach(question => question.options[question.selectedOptionIndex] === question.correctAnswer ?
-        setCorrectAnswers(prevCount => prevCount + 1)
-        :
-        null
-      )
-
       setIsGameOver(true);
+      
     } else {
       alert('Answer each question before submitting this quiz.')
     }
   }
 
+  useEffect(() => {
+    if (isGameOver) {
+      questions.forEach(question => question.isSelectionCorrect && setCorrectAnswers(prevCount => prevCount + 1))
+    }
+  }, [isGameOver]);
+
   function restartGame() {
     setShowStartGame(true);
     setIsGameOver(false);
     setCorrectAnswers(0);
+    setAmountOfQuestions(0);
   }
 
   return (

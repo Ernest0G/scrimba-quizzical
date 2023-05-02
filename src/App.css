@@ -81,6 +81,7 @@ body {
 
 .question {
   width: 50%;
+  font-size: 1.5rem;
 }
 
 .questions {
@@ -119,11 +120,9 @@ body {
 }
 
 .incorrect {
-  background-color: #94D7A2;
-  color: #293264;
+  background-color: #e2a39a;
+  color: #51577e;
 }
-
-
 
 hr {
   width: 100%;
